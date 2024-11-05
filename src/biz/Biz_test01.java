@@ -1,6 +1,10 @@
+package biz;
+
+import dpt.Dpt;
+import emp.Emp;
 import org.junit.Test;
 
-public class Biz_test {
+public class Biz_test01 {
 
     @Test
     public void t1() {

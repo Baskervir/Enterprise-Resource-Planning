@@ -1,3 +1,5 @@
+package emp;
+
 public class Emp {
     private String empN;
     private String nm;
