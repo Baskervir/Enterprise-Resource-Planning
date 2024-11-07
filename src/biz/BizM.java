@@ -37,4 +37,26 @@ public class BizM {
             this.out.println(thisDptNm);
         }
     }
+
+    @Test
+    public void req01_2() {
+        String input = "A2";
+
+        Dpt start = dptM.getDpt(input);
+
+        while (true) {
+            String upDptCd = printDptNmAndReturnUpDptCd(start);
+
+            if (upDptCd == null) {
+                return;
+            }
+
+            start = dptM.getDpt(upDptCd);
+        }
+    }
+
+    private String printDptNmAndReturnUpDptCd(Dpt dpt) {
+        this.out.println(dpt.getDptNm());
+        return dpt.getUpDptCd();
+    }
 }
