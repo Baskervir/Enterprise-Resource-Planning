@@ -7,7 +7,7 @@ public class Dpt {
     private String dptCd;
     private String dptNm;
 
-    Dpt(String dptCd) {
+    public Dpt(String dptCd) {
         this.dptCd = dptCd;
 
         if ("C0".equals(dptCd)) {

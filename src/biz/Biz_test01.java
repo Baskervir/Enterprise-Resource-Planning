@@ -75,17 +75,17 @@ public class Biz_test01 {
         }
     }
 
-    //리펙토링을 통한 변경 발생
-//    @Test
-//    public void t5() {
-//        Dpt[] dptArray = new Dpt[3];
-//        dptArray[0] = new Dpt("C0");
-//        dptArray[1] = new Dpt("S0");
-//        dptArray[2] = new Dpt("A1");
-//
-//        for (Dpt dpt : dptArray) {
-//            String dptNm = dpt.getDptNm();
-//            System.out.println(dptNm);
-//        }
+//    리펙토링을 통한 변경 발생
+    @Test
+    public void t5() {
+        Dpt[] dptArray = new Dpt[3];
+        dptArray[0] = new Dpt("C0");
+        dptArray[1] = new Dpt("S0");
+        dptArray[2] = new Dpt("A1");
+
+        for (Dpt dpt : dptArray) {
+            String dptNm = dpt.getDptNm();
+            System.out.println(dptNm);
+        }
     }
 }
