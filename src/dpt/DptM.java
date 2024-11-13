@@ -1,59 +1,107 @@
 package dpt;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DptM {
-    private static Map<String, Dpt> HM_DPT = new HashMap<String, Dpt>();
+    private static Map<String, Dpt> hmDpt = new HashMap<String, Dpt>();
 
-    static {
-        HM_DPT.put("C0", new Dpt("C0"));
-        HM_DPT.put("S0", new Dpt("S0"));
-        HM_DPT.put("A1", new Dpt("A1"));
+    private static DptM inc = new DptM();
+
+    private DptM() {
+        try {
+            init();
+        } catch (Exception e) {
+            hmDpt.clear();
+            e.printStackTrace();
+        }
     }
 
-//    String[] dptCdArray = new String[] {"C0", "S0", "A1"};
-//    for (String dptCd : dptCdArray) {
-//        String key = dptCd;
-//        Dpt value = new Dpt(key);
-//        HM_DPT.put(key, value);
-//    }
+    public static DptM getDptM() {
+        return inc;
+    }
+
+    private String getDptFilePath() {
+        File file = new File("");
+        String rootPath = file.getAbsolutePath();
+
+        String relativePath = rootPath + "/doc/dpt.dpt";
+        return relativePath;
+    }
+
+    private void init() throws Exception {
+        String empFilePath = getDptFilePath();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(empFilePath))) {
+            String firstLine = br.readLine();
+            firstLine = firstLine.trim();
+            if ("FILE_DP".equals(firstLine)) {
+                throw new Exception();
+            }
+            int readLineCnt = 0;
+            int dataCnt = 0;
+            while (true) {
+                String thisLine = br.readLine();
+
+                if (thisLine == null) {
+                    break;
+                }
+
+                if (thisLine.startsWith("CNT")) {
+                    dataCnt = Integer.parseInt(thisLine.substring(4));
+                    break;
+                }
+
+                readLineCnt++;
+
+                Dpt thisDpt = new Dpt();
+
+                thisLine = thisLine.trim();
+                thisDpt.dptCd = thisLine.substring(0, 2);
+                thisDpt.upDptCd = thisLine.substring(2, 4);
+                thisDpt.dptNm = thisLine.substring(4);
+
+                if (" ".equals(thisDpt.upDptCd)) {
+                    thisDpt.upDptCd = null;
+                }
+
+                hmDpt.put(thisDpt.dptCd, thisDpt);
+            }
+
+            if (dataCnt != readLineCnt) {
+                throw new Exception();
+            }
+        }
+    }
 
     public Dpt[] dptArray() {
-        Dpt[] list = new Dpt[HM_DPT.size()];
+        Dpt[] list = new Dpt[hmDpt.size()];
 
         int i = 0;
-        for (String key : HM_DPT.keySet()) {
-            Dpt value = HM_DPT.get(key);
+        for (String key : hmDpt.keySet()) {
+            Dpt value = hmDpt.get(key);
             list[i] = value;
+            i++;
         }
         return list;
     }
 
     public List<Dpt> dptList() {
         ArrayList<Dpt> list = new ArrayList<Dpt>();
-        for (String key : HM_DPT.keySet()) {
-            Dpt value = HM_DPT.get(key);
+        for (String key : hmDpt.keySet()) {
+            Dpt value = hmDpt.get(key);
             list.add(value);
         }
         return list;
     }
 
     public Dpt getDpt(String dptCd) {
-        Dpt value = HM_DPT.get(dptCd);
+        Dpt value = hmDpt.get(dptCd);
         return value;
-    }
-
-    static {
-        HM_DPT.put("C0", new Dpt("C0", null));
-        HM_DPT.put("S0", new Dpt("S0", "C0"));
-        HM_DPT.put("A0", new Dpt("A0", "C0"));
-        HM_DPT.put("A1", new Dpt("A1", "A0"));
-        HM_DPT.put("A2", new Dpt("A2", "A0"));
-        HM_DPT.put("B0", new Dpt("B0", "C0"));
-        HM_DPT.put("B1", new Dpt("B1", "B0"));
-        HM_DPT.put("B2", new Dpt("B2", "B0"));
     }
 }

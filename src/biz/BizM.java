@@ -2,61 +2,35 @@ package biz;
 
 import dpt.Dpt;
 import dpt.DptM;
+import emp.Emp;
 import org.junit.jupiter.api.Test;
 
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BizM {
-    private DptM dptM = new DptM();
+    private PrintWriter out = new PrintWriter(System.out);
 
-    private PrintStream out = System.out;
+    public void println(String msg) {
+        out.println(msg);
+        out.flush();
+    }
 
     @Test
     public void req01() {
-        String input = "A2";
+        String input = "E001";
 
-        Dpt dptA2 = dptM.getDpt(input);
+        try {
+            Emp empE001 = new Emp(input);
+            String proFile = empE001.proFile();
 
-        List<Dpt> dptA2List = new ArrayList<>();
-        dptA2List.add(dptA2);
-
-        String upDptCdA0 = dptA2.getUpDptCd();
-        Dpt dptA0 = dptM.getDpt(upDptCdA0);
-        dptA2List.add(dptA0);
-
-        String upDptCdC0 = dptA0.getUpDptCd();
-        Dpt dptC0 = dptM.getDpt(upDptCdC0);
-        dptA2List.add(dptC0);
-
-        int size = dptA2List.size();
-        for (int i = 0; i < size; i++) {
-            Dpt thisDpt = dptA2List.get(i);
-            String thisDptNm = thisDpt.getDptNm();
-            this.out.println(thisDptNm);
+            println(proFile);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            String msg = ex.getMessage();
+            println("사번 [" + input + "] proFile 출력을 실패 했습니다. [" + msg + "]");
         }
-    }
-
-    @Test
-    public void req01_2() {
-        String input = "A2";
-
-        Dpt start = dptM.getDpt(input);
-
-        while (true) {
-            String upDptCd = printDptNmAndReturnUpDptCd(start);
-
-            if (upDptCd == null) {
-                return;
-            }
-
-            start = dptM.getDpt(upDptCd);
-        }
-    }
-
-    private String printDptNmAndReturnUpDptCd(Dpt dpt) {
-        this.out.println(dpt.getDptNm());
-        return dpt.getUpDptCd();
     }
 }
