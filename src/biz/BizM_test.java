@@ -38,4 +38,10 @@ public class BizM_test {
         BizM bizM = new BizM();
         bizM.req03(input);
     }
+
+    @Test
+    public void t4() throws Exception {
+        BizM bizM = new BizM();
+        bizM.req04();
+    }
 }

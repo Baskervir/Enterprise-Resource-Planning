@@ -30,7 +30,7 @@ public class DptM {
         File file = new File("");
         String rootPath = file.getAbsolutePath();
 
-        String relativePath = rootPath + "/doc/dpt.dpt";
+        String relativePath = rootPath + "/doc/dpt.dat";
         return relativePath;
     }
 
